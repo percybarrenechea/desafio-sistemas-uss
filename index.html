@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#141c52">
+  <title>Desafío Sistemas USS</title>
+  <link rel="icon" href="assets/logo-uss.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============ INICIO ============ -->
+  <section class="pantalla activa" id="inicio">
+    <div class="logo-box"><img src="assets/logo-uss.jpg" alt="Universidad Señor de Sipán"></div>
+    <p class="chip">Ingeniería de Sistemas e Informática</p>
+    <h1>¿Un ingeniero de sistemas<br>puede hacer esto?</h1>
+    <p class="sub">Responde <b class="t-no">NO</b> o <b class="t-si">SÍ</b> antes de que se acabe el tiempo ⏱.<br>
+      Tienes <b class="t-no">❤️❤️❤️ 3 vidas</b> hasta el primer jefe… <b class="t-no">después, un solo error y pierdes</b> ☠️<br>
+      <b class="t-ambar">Pelea contra los jefes</b> 👾 y llega a <b class="t-ambar">400 pts</b>.</p>
+
+    <form class="registro" id="registro" autocomplete="off">
+      <label for="nombre">Escribe tu nombre</label>
+      <input id="nombre" maxlength="15" placeholder="Tu nombre" required>
+      <button class="boton" type="submit">▶ JUGAR</button>
+    </form>
+
+    <div class="ranking-box">
+      <h3>🏆 Ranking</h3>
+      <ol class="ranking" id="ranking-inicio"></ol>
+      <p class="ranking-estado"></p>
+    </div>
+    <p class="aviso-legal">Proyecto estudiantil de Ingeniería de Sistemas e Informática · USS.<br>No es una página oficial de la universidad.</p>
+  </section>
+
+  <!-- ============ JUEGO (cartas) ============ -->
+  <section class="pantalla" id="juego">
+    <header class="barra">
+      <button class="mini-logo-btn" id="btn-logo" title="Salir (se guardan tus puntos)"><img src="assets/logo-uss.jpg" alt="USS" class="mini-logo"></button>
+      <div class="jugador" id="jugador"></div>
+      <div class="vidas" id="vidas" title="Vidas"></div>
+      <div class="puntos"><span id="racha"></span><b id="puntos">0</b> pts</div>
+      <button class="salir" id="btn-salir" title="Terminar partida">✕</button>
+    </header>
+    <div class="proximo">
+      <div class="progreso"><i id="barra"></i></div>
+      <span id="proximo-txt"></span>
+    </div>
+
+    <div class="mesa">
+      <div class="rescate-banner" id="rescate-banner" hidden>🆘 PREGUNTA DE RESCATE: ¡acierta para tener la revancha!</div>
+      <p class="pregunta" id="pregunta">¿Un ingeniero de sistemas puede…</p>
+
+      <div class="carta" id="carta">
+        <div class="reloj"><i id="reloj-barra"></i></div>
+        <div class="reloj-num" id="reloj-num"></div>
+        <div class="carta-emoji" id="carta-emoji"></div>
+        <div class="carta-texto" id="carta-texto"></div>
+        <span class="sello sello-si">SÍ</span>
+        <span class="sello sello-no">NO</span>
+      </div>
+
+      <div class="respuesta" id="respuesta" hidden>
+        <div class="resp-titulo" id="resp-titulo"></div>
+        <p class="resp-texto" id="resp-texto"></p>
+        <div class="resp-curso" id="resp-curso"></div>
+        <div class="resp-alerta" id="resp-alerta" hidden></div>
+        <button class="boton chico" id="btn-sig">Siguiente →</button>
+      </div>
+    </div>
+
+    <div class="controles" id="controles">
+      <button class="btn-redondo no" id="btn-no" aria-label="No">✖<small>NO</small></button>
+      <button class="btn-redondo si" id="btn-si" aria-label="Sí">✔<small>SÍ</small></button>
+    </div>
+  </section>
+
+  <!-- ============ PELEA ============ -->
+  <section class="pantalla" id="pelea">
+    <button class="salir salir-pelea" id="btn-salir-pelea" title="Salir (se guardan tus puntos)">✕</button>
+    <div class="lienzo-wrap">
+      <canvas id="lienzo" width="960" height="540"></canvas>
+    </div>
+    <p class="teclas">
+      <kbd>←</kbd><kbd>→</kbd> moverte · <kbd>↑</kbd> saltar (2 veces = doble salto) · <kbd>ESPACIO</kbd> atacar (combo x3)
+      · <kbd>SHIFT</kbd> esquivar · <kbd>K</kbd> súper ⚡
+      <br><small>⚠️ = salta o esquiva · 🛡️ = pégale por la espalda · recoge ❤️ y ⚡ · ¡antes de que se acabe el tiempo!</small>
+    </p>
+    <div class="girar">📱↻ Gira tu celular para jugar mejor</div>
+    <div class="tactil">
+      <div class="t-grupo">
+        <button class="t-btn" data-ctrl="izq" aria-label="Izquierda">◀</button>
+        <button class="t-btn" data-ctrl="der" aria-label="Derecha">▶</button>
+      </div>
+      <div class="t-grupo">
+        <button class="t-btn azul" data-ctrl="dash" aria-label="Esquivar">💨</button>
+        <button class="t-btn ambar" data-ctrl="esp" aria-label="Súper ataque">⚡</button>
+        <button class="t-btn" data-ctrl="salto" aria-label="Saltar">⬆</button>
+        <button class="t-btn rojo grande" data-ctrl="atk" aria-label="Atacar">👊</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MENSAJE ============ -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-caja">
+      <div class="modal-emoji" id="modal-emoji"></div>
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-texto"></p>
+      <p class="modal-dato" id="modal-dato"></p>
+      <div class="modal-botones">
+        <button class="boton chico claro" id="modal-cancelar" hidden>Seguir jugando</button>
+        <button class="boton chico" id="modal-btn">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FINAL ============ -->
+  <section class="pantalla" id="fin">
+    <div class="fin-caja">
+      <div class="fin-emoji" id="fin-emoji"></div>
+      <h2 id="fin-titulo"></h2>
+      <p class="fin-puntos" id="fin-resumen"></p>
+
+      <div class="ranking-box">
+        <h3>🏆 Ranking</h3>
+        <ol class="ranking" id="ranking-fin"></ol>
+        <p class="ranking-estado"></p>
+      </div>
+
+      <h3>En Ingeniería de Sistemas de la USS:</h3>
+      <div class="extras">
+        <div class="extra"><b>🎓 5 años</b><span>Bachiller + Título de Ingeniero</span></div>
+        <div class="extra"><b>🏅 3 certificados</b><span>en los ciclos IV, VI y VIII, ¡mientras estudias!</span></div>
+        <div class="extra"><b>🚀 Visión emprendedora</b><span>Creas tus propias oportunidades</span></div>
+        <div class="extra"><b>🌍 Conexión con el mundo</b><span>Convenios con universidades del extranjero</span></div>
+      </div>
+
+      <button class="boton" id="btn-otra">↻ Jugar otra vez</button>
+      <p class="aviso-legal">Proyecto estudiantil de Ingeniería de Sistemas e Informática · USS. No es una página oficial de la universidad.</p>
+    </div>
+  </section>
+
+  <canvas id="confeti"></canvas>
+
+  <script src="js/data.js"></script>
+  <script src="js/pelea.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
