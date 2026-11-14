@@ -57,7 +57,7 @@ h1 { margin: .6rem 0; font-size: clamp(1.8rem, 6vw, 3rem); font-weight: 900; lin
 .registro label { font-weight: 800; opacity: .85; }
 .registro input {
   width: min(300px, 80vw); padding: .8rem 1rem; border-radius: 14px; border: 3px solid transparent;
-  font: inherit; font-size: 1.3rem; font-weight: 800; text-align: center; color: var(--texto); outline: none;
+  font: inherit; font-size: 1.3rem; font-weight: 800; text-align: center; color: var(--texto); outline: none; background: #fff;
 }
 .registro input:focus { border-color: var(--ambar); }
 .registro .boton { margin-top: .6rem; animation: latido 1.5s ease-in-out infinite; }
